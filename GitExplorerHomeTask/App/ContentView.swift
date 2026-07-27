@@ -16,17 +16,6 @@ struct ContentView: View {
             Text("Hello, world!")
         }
         .padding()
-        .onAppear {
-            Task {
-                let service = LiveGithubRepositoryService()
-                
-                let result = try await service.searchRepositories(query: "strapi")
-                print(result.totalCount, result.items.first?.fullName ?? "-")
-                
-                let tag = try await service.latestReleaseTag(owner: "strapi", name: "strapi")
-                print(tag ?? "no release")
-            }
-        }
     }
 }
 

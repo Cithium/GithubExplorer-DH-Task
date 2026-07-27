@@ -7,7 +7,7 @@
 
 protocol GitHubRepositoryService {
     func searchRepositories(query: String) async throws -> RepositorySearchResponse
-    func repository(owner: String, name: String) async throws -> Repository
+//    func repository(owner: String, name: String) async throws -> Repository
     func latestReleaseTag(owner: String, name: String) async throws -> String?
 }
 
@@ -24,11 +24,11 @@ nonisolated struct LiveGithubRepositoryService: GitHubRepositoryService {
         )
     }
 
-    func repository(owner: String, name: String) async throws -> Repository {
-        try await client.send(
-            GitHubEndpoint.repository(owner: owner, name: name).request
-        )
-    }
+//    func repository(owner: String, name: String) async throws -> Repository {
+//        try await client.send(
+//            GitHubEndpoint.repository(owner: owner, name: name).request
+//        )
+//    }
 
     func latestReleaseTag(owner: String, name: String) async throws -> String? {
         let response: Release = try await client.send(
