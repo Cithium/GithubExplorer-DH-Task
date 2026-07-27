@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RepositorySearchResponse: Decodable, Equatable, Sendable {
+nonisolated struct RepositorySearchResponse: Decodable, Equatable, Sendable {
     let totalCount: Int
     let incompleteResults: Bool
     let items: [Repository]

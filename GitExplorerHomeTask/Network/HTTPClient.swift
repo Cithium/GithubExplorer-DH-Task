@@ -11,7 +11,7 @@ protocol HTTPClient {
     func send<T: Decodable>(_ request: URLRequest) async throws -> T
 }
 
-struct URLSessionHTTPClient: HTTPClient {
+nonisolated struct URLSessionHTTPClient: HTTPClient {
     private let session: URLSession
     
     init(session: URLSession = .shared) {

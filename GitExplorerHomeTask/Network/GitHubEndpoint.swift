@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GithubEndpoint {
+nonisolated enum GitHubEndpoint {
     case searchRepositories(query: String)
     case repository(owner: String, name: String)
     case latestRelease(owner: String, name: String)

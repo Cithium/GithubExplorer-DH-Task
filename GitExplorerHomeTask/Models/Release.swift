@@ -5,7 +5,7 @@
 //  Created by Hamza Abdulilah on 2026-07-27.
 //
 
-struct Release: Decodable, Sendable, Equatable {
+nonisolated struct Release: Decodable, Sendable, Equatable {
     let tagName: String
     let name: String?
 
