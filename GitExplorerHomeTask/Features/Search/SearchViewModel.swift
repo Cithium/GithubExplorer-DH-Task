@@ -1,5 +1,5 @@
 //
-//  SearchState.swift
+//  SearchViewModel.swift
 //  GitExplorerHomeTask
 //
 //  Created by Hamza Abdulilah on 2026-07-27.
