@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated struct Repository: Decodable, Sendable, Equatable, Identifiable {
+nonisolated struct Repository: Decodable, Sendable, Equatable, Identifiable, Hashable {
     let id: Int
     let name: String
     let fullName: String
@@ -28,7 +28,7 @@ nonisolated struct Repository: Decodable, Sendable, Equatable, Identifiable {
 }
 
 extension Repository {
-    nonisolated struct Owner: Decodable, Sendable, Equatable {
+    nonisolated struct Owner: Decodable, Sendable, Equatable, Hashable {
         let login: String
         private let avatarURLString: String?
 

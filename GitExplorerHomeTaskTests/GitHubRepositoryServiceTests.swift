@@ -25,3 +25,4 @@ final class GitHubRepositoryServiceTests: XCTestCase {
 }
 
 // More tests here could be like testing avatar url, nullable values (repository that has no releases) etc
+
