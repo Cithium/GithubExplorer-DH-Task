@@ -11,7 +11,7 @@ protocol GitHubRepositoryService {
     func latestReleaseTag(owner: String, name: String) async throws -> String?
 }
 
-nonisolated struct LiveGithubRepositoryService: GitHubRepositoryService {
+nonisolated struct LiveGitHubRepositoryService: GitHubRepositoryService {
     private let client: HTTPClient
 
     init(client: HTTPClient = URLSessionHTTPClient()) {
