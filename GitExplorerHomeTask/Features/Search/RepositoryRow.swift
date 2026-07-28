@@ -12,12 +12,11 @@ struct RepositoryRow: View {
     let repository: Repository
 
     var body: some View {
-        HStack(alignment: .top, spacing: 10) {
+        HStack(alignment: .top, spacing: 12) {
             avatar
-            VStack(alignment: .leading, spacing: 5) {
+            VStack(alignment: .leading, spacing: 8) {
                 Text(repository.displayTitle)
                     .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(.primary)
 
                 if let description = repository.description {
                     Text(description)
@@ -35,7 +34,9 @@ struct RepositoryRow: View {
         AsyncImage(url: repository.owner.avatarURL) { phase in
             switch phase {
             case let .success(image):
-                image.resizable().scaledToFill()
+                image
+                    .resizable()
+                    .scaledToFill()
             default:
                 fallbackIcon
             }
@@ -46,10 +47,6 @@ struct RepositoryRow: View {
     }
 
     private var fallbackIcon: some View {
-        ZStack {
-            Color.secondary.opacity(0.12)
-            Image(systemName: "folder.fill")
-                .foregroundStyle(.secondary)
-        }
+        Image(systemName: "folder.fill")
     }
 }

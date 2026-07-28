@@ -10,24 +10,28 @@ import SwiftUI
 
 struct SearchView: View {
     @State private var viewModel = SearchViewModel()
+    @Binding var path: NavigationPath
     
     var body: some View {
-        content
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationTitle("Repository Library")
-            .navigationBarTitleDisplayMode(.inline)
-            .searchable(text: $viewModel.query,
-                        placement: .navigationBarDrawer(displayMode: .always),
-                        prompt: "Search for repository")
-            .task(id: viewModel.query) {
-                await viewModel.search()
-            }
-        
+        NavigationStack(path: $path) {
+            content
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .navigationTitle("Repository Library")
+                .navigationBarTitleDisplayMode(.inline)
+                .searchable(text: $viewModel.query,
+                            placement: .navigationBarDrawer(displayMode: .always),
+                            prompt: "Search for repository")
+                .task(id: viewModel.query) {
+                    await viewModel.search()
+                }
+                .navigationDestination(for: Repository.self) { repository in
+                    RepositoryDetailView(repository: repository)
+                }
+        }
     }
 
     @ViewBuilder
     private var content: some View {
-        ZStack {
             switch viewModel.state {
             case .idle:
                 emptyState
@@ -40,7 +44,6 @@ struct SearchView: View {
             case let .failed(error):
                 failureState(error)
             }
-        }
     }
 
     private func resultsList(_ repositories: [Repository], totalCount: Int) -> some View {
@@ -48,7 +51,7 @@ struct SearchView: View {
             Section {
                 ForEach(repositories) { repository in
                     Button {
-                        print("Navigate to Detail")
+                        path.append(repository)
                     } label: {
                         RepositoryRow(repository: repository)
                     }
@@ -58,7 +61,6 @@ struct SearchView: View {
             } header: {
                 Text("\(totalCount) results")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
                     .accessibilityAddTraits(.isHeader)
             }
         }
@@ -85,7 +87,7 @@ struct SearchView: View {
     }
 
     private func failureState(_ error: GitHubError) -> some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             message(title: "Something went wrong", detail: errorDetail(for: error))
             Button("Try again") {
                 Task { await viewModel.retry() }
