@@ -10,7 +10,6 @@ import Foundation
 @MainActor
 @Observable
 final class RepositoryDetailViewModel {
-    
     enum ReleaseState: Equatable {
         case loading
         case version(String)
@@ -19,8 +18,10 @@ final class RepositoryDetailViewModel {
     }
 
     let repository: Repository
+    
     private(set) var release: ReleaseState = .loading
-
+    
+    @ObservationIgnored
     private let service: GitHubRepositoryService
 
     init(
@@ -40,7 +41,10 @@ final class RepositoryDetailViewModel {
             release = tag.map(ReleaseState.version) ?? .none
         } catch is CancellationError {
             return
-        } catch {
+        } catch GitHubError.notFound {
+            return release = .none
+        }
+        catch {
             release = .failed
         }
     }

@@ -40,7 +40,7 @@ struct SearchView: View {
             case let .loaded(repositories, totalCount):
                 resultsList(repositories, totalCount: totalCount)
             case .noMatches:
-                message(title: "No results", detail: "Try something different")
+                noMatches
             case let .failed(error):
                 failureState(error)
             }

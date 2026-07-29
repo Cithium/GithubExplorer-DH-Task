@@ -24,9 +24,11 @@ nonisolated struct URLSessionHTTPClient: HTTPClient {
         
         do {
             (data, response) = try await session.data(for: request)
-        } catch let error as URLError where error.code == .cancelled {
+        }
+        catch let error as URLError where error.code == .cancelled {
             throw CancellationError()
-        } catch {
+        }
+        catch {
             throw GitHubError.transport
         }
         

@@ -13,7 +13,7 @@ final class GitHubRepositoryServiceTests: XCTestCase {
     
     func test_searchResponseDecodeAndTotalCount() async throws {
         let client = MockedHTTPClient(data: try mockData("search_repositories"))
-        let service = LiveGithubRepositoryService(client: client)
+        let service = LiveGitHubRepositoryService(client: client)
         
         let result = try await service.searchRepositories(query: "Tetris")
         let count = result.items.count

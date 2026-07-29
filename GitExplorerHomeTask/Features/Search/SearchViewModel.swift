@@ -9,7 +9,6 @@ import Foundation
 
 @MainActor @Observable
 final class SearchViewModel {
-
     enum SearchState: Equatable {
         case idle
         case loading
@@ -40,6 +39,7 @@ final class SearchViewModel {
             if case .loaded(_, _) = state {
                 return
             }
+
             state = .idle
             return
         }

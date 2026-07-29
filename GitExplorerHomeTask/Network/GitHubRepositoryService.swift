@@ -31,9 +31,13 @@ nonisolated struct LiveGitHubRepositoryService: GitHubRepositoryService {
 //    }
 
     func latestReleaseTag(owner: String, name: String) async throws -> String? {
-        let response: Release = try await client.send(
-            GitHubEndpoint.latestRelease(owner: owner, name: name).request
-        )
-        return response.tagName
+        do {
+            let response: Release = try await client.send(
+                GitHubEndpoint.latestRelease(owner: owner, name: name).request
+            )
+            return response.tagName
+        } catch GitHubError.notFound {
+            return nil
+        }
     }
 }
